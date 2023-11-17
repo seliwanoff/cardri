@@ -31,6 +31,7 @@ export default {
       daysInMonth: "",
       transactions: [],
       moment: moment,
+      per_page: 0,
 
       months: [
         "January",
@@ -82,9 +83,12 @@ export default {
         }&month=0${parseInt(this.am)}`
       );
 
-      this.getTotal = gettransactions.data.data.total;
+      this.totalpage = gettransactions.data.data.total;
       this.totalAmount = gettransactions.data.total;
       this.transactions = gettransactions.data.data.data;
+      this.per_page = getUsers.data.data.per_page;
+      this.page = Math.ceil(parseInt(this.totalpage / this.per_page));
+      console.log;
     } catch (e) {
       if (e.response.status === 401) {
         this.$router.push("/");
@@ -101,12 +105,6 @@ export default {
     async pageNumberget(newPagenumber) {
       if (this.day) {
         this.pageNumber = newPagenumber + 1;
-        this.$router.push({
-          path: this.$route.path,
-          query: {
-            pageNumber: newPagenumber + 1,
-          },
-        });
 
         try {
           const getUsers = await axios.get(
@@ -148,12 +146,6 @@ export default {
       }
     },
     async prev() {
-      this.$router.push({
-        path: this.$route.path,
-        query: {
-          pageNumber: this.pageNumber - 1,
-        },
-      });
       this.pageNumber = this.pageNumber - 1;
 
       try {
@@ -177,12 +169,6 @@ export default {
       }
     },
     async next() {
-      this.$router.push({
-        path: this.$route.path,
-        query: {
-          pageNumber: this.pageNumber + 1,
-        },
-      });
       this.pageNumber = this.pageNumber + 1;
 
       try {
@@ -281,6 +267,7 @@ export default {
           this.totalpage = getUsers.data.data.total;
           this.per_page = getUsers.data.data.per_page;
           this.page = Math.ceil(parseInt(this.totalpage / this.per_page) + 1);
+          console.log(this.page);
           this.totalAmount = getUsers.data.total;
         } catch (e) {
           if (e.response.status === 401) {
@@ -358,7 +345,7 @@ export default {
           <div class="col w-100">
             <b-card class="bg-#4705AF p-0 m-0" style="background: #4705af; color: #fff">
               <h6 style="color: #fff">{{ nm.slice(0, 3) }} transaction</h6>
-              {{ getTotal }}
+              {{ totalpage }}
             </b-card>
             <b-card class="bg-#4705AF p-0 mt-2" style="background: #4705af; color: #fff">
               <h6 style="color: #fff">{{ nm.slice(0, 3) }} Income</h6>
@@ -395,11 +382,15 @@ export default {
               <td v-else-if="item.network === '2'">AIRTEL</td>
               <td v-else-if="item.network === '3'">9mobile</td>
               <td v-else-if="item.network === '4'">GLO</td>
+              <td v-else>{{ item.network }}</td>
               <td>&#8358;{{ item.bbefore }}</td>
               <td>&#8358;{{ item.bafter }}</td>
               <td>&#8358;{{ item.amount }}</td>
               <td>{{ item.m }}</td>
-              <td>{{ moment(item.updated_at).format("DD-MM-YYYY") }}</td>
+              <td>
+                {{ new Date(item.created_at).toDateString() }}
+                {{ new Date(item.created_at).toLocaleTimeString() }}
+              </td>
               <td v-if="item.status === '1'" style="color: green">Success</td>
               <td v-else style="text-alert">Failed</td>
             </tr>
@@ -409,8 +400,8 @@ export default {
               <ul class="pagination">
                 <li class="page-item">
                   <button
+                    type="button"
                     class="page-link"
-                    href="javascript:void(0)"
                     :disabled="pageNumber <= 1"
                     @click="prev"
                   >
@@ -423,8 +414,8 @@ export default {
                   class="page-item"
                 >
                   <button
+                    type="button"
                     class="page-link"
-                    href="javascript:void(0)"
                     :class="['page-link', pageNumber === index + 1 ? 'actives' : '']"
                     @click="pageNumberget(index)"
                   >
@@ -434,8 +425,8 @@ export default {
 
                 <li class="page-item">
                   <button
+                    type="button"
                     class="page-link"
-                    href="javascript:void(0)"
                     :disabled="pageNumber >= page"
                     @click="next"
                   >

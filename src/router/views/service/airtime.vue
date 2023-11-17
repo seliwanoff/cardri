@@ -30,6 +30,7 @@ export default {
       daysInMonth: "",
       transactions: [],
       moment: moment,
+      search: "",
 
       months: [
         "January",
@@ -252,6 +253,20 @@ export default {
         }
       }
     },
+    async searchByCriteria() {
+      try {
+        const getUsers = await axios.get(
+          `${process.env.VUE_APP_BASE_URL}api/gettransactions?type=1&search=${this.search}`
+        );
+        this.transactions = getUsers.data.data.data;
+        this.totalpage = getUsers.data.data.total;
+        this.per_page = getUsers.data.data.per_page;
+        this.page = Math.ceil(parseInt(this.totalpage / this.per_page) + 1);
+        this.totalAmount = getUsers.data.total;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     async getYearTransact(year) {
       this.y = year;
       if (this.day) {
@@ -366,12 +381,37 @@ export default {
           </div>
         </b-card>
       </div>
+      <div class="w-100 mt-2 mb-2">
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <input
+              type="search"
+              class="w-100"
+              v-model="search"
+              @keyup="searchByCriteria"
+              placeholder="Search by any criteria"
+              style="
+                padding: 16px 8px;
+                font-size: 14px;
+                font-weight: 500;
+                letter-spacing: 2%;
+
+                outline: none;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+              "
+            />
+          </div>
+        </div>
+      </div>
       <div class="col" style="overflow: auto">
         <table v-if="transactions.length > 0" class="table">
           <thead class="thead-light">
             <tr role="row">
               <th scope="col">Reference</th>
               <th scope="col">Receiver</th>
+              <th scope="col">Name</th>
+              <th scope="col">Username</th>
               <th scope="col">Network</th>
               <th scope="col">Bal. Before</th>
               <th scope="col">Bal. After</th>
@@ -390,6 +430,9 @@ export default {
             >
               <td>{{ item.ref }}</td>
               <td>{{ item.reciever }}</td>
+              <td>{{ item.fname }} {{ item.lname }}</td>
+              <td>{{ item.username }}</td>
+
               <td v-if="item.network === '1'">MTN</td>
               <td v-else-if="item.network === '2'">AIRTEL</td>
               <td v-else-if="item.network === '3'">9mobile</td>
@@ -398,15 +441,18 @@ export default {
               <td>&#8358;{{ item.bafter }}</td>
               <td>&#8358;{{ item.amount }}</td>
               <td>{{ item.m }}</td>
-              <td>{{ moment(item.updated_at).format("DD-MM-YYYY") }}</td>
+              <td>
+                {{ new Date(item.created_at).toDateString()
+                }}{{ new Date(item.created_at).toLocaleTimeString() }}
+              </td>
               <td v-if="item.status === '1'" style="color: green">Success</td>
               <td v-else style="text-alert">Failed</td>
             </tr>
           </tbody>
           <tfoot>
             <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
+              <ul class="" style="list-style: none">
+                <li class="page-item" style="float: left">
                   <button
                     class="page-link"
                     href="javascript:void(0)"
@@ -420,6 +466,7 @@ export default {
                   v-for="(item, index) in new Array(page)"
                   :key="index"
                   class="page-item"
+                  style="float: left"
                 >
                   <button
                     class="page-link"
@@ -431,7 +478,7 @@ export default {
                   </button>
                 </li>
 
-                <li class="page-item">
+                <li class="page-item" style="float: left">
                   <button
                     class="page-link"
                     href="javascript:void(0)"

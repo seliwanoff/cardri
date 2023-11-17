@@ -3,10 +3,9 @@ import Layout from "@layouts/auth";
 //  import { authMethods } from "@state/helpers";
 // import appConfig from "@src/app.config";
 // import axios from "axios";
-import Message from "@/src/components/message.vue";
 
 export default {
-  components: { Layout, Message },
+  components: { Layout },
   data() {
     return {
       id: "",
@@ -62,7 +61,7 @@ export default {
 <template>
   <Layout>
     <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6 col-xl-5">
+      <div class="col-md-8 p-2" style="max-width: 300px !important ; width: 100%">
         <div class="text-center">
           <a href="/">
             <span>
@@ -71,20 +70,15 @@ export default {
           </a>
           <p class="text-muted mt-2 mb-4"></p>
         </div>
-        <Message :status="status" :message="message" />
 
-        <div class="card">
-          <div class="card-body p-4">
+        <div class="card" style="border-radius: 10px !important">
+          <div class="card-body p-3">
             <div class="text-center mb-4">
-              <h4 class="text-uppercase mt-0">Sign In</h4>
+              <h4 class="text-uppercase mt-0" style="font-size: 13px">Sign In</h4>
             </div>
 
             <b-form @submit.prevent="handleSubmit">
-              <b-form-group
-                id="input-group-1"
-                label="Username, Email or Number"
-                label-for="input-1"
-              >
+              <b-form-group id="input-group-1" label="Username" label-for="input-1">
                 <b-form-input
                   id="input-1"
                   v-model="id"
@@ -136,4 +130,13 @@ export default {
   </Layout>
 </template>
 
-<style lang="scss" module></style>
+<style>
+#input-group-1,
+#input-group-2 {
+  font-size: 11px !important;
+}
+.btn-block {
+  background: rgb(71, 5, 175) !important;
+  border: 1px solid rgb(71, 5, 175) !important;
+}
+</style>

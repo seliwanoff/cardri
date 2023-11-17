@@ -61,6 +61,26 @@ export default {
       ncaitime: "",
       ncdata: "",
       ncbill: "",
+      bridgecardcfee: 0,
+      bridgerate: 0,
+      ftransferx: 0,
+      cardcreatebridgecardcfee: 0,
+      ktfee: 0,
+
+      tfee: 0,
+      mtnx: 0,
+      glox: 0,
+      airtelx: 0,
+      mobilex: 0,
+      tvx: 0,
+      electricityx: 0,
+      ltransferx: 0,
+      aritimex: 0,
+      cardx: 0,
+      gloapi: "",
+      airtelapi: "",
+      chinapayrate: 0,
+      chinapafee: 0,
     };
   },
   async mounted() {
@@ -68,7 +88,6 @@ export default {
       const response = await axios.get(
         `${process.env.VUE_APP_BASE_URL}api/getmanagement`
       );
-      console.log(response);
       this.ndata = response.data.data.ndata;
       this.mdata = response.data.data.mdata;
       this.nairtime = response.data.data.nairtime;
@@ -78,6 +97,8 @@ export default {
       this.ncable = response.data.data.ncable;
       this.mcable = response.data.data.mcable;
       this.mtnapi = response.data.data.mtnapi;
+      this.gloapi = response.data.data.gloapi;
+
       this.cdata = response.data.data.cdata;
       this.caitime = response.data.data.caitime;
       this.mtn = response.data.data.mtn;
@@ -88,8 +109,28 @@ export default {
       this.ncaitime = response.data.data.ncaitime;
       this.ncdata = response.data.data.ncdata;
       this.ncbill = response.data.data.ncbill;
+      this.ktfee = response.data.data.ktfee;
+
+      this.tfee = response.data.data.tfee;
+      this.mtnx = response.data.data.mtnx;
+      this.glox = response.data.data.glox;
+      this.airtelx = response.data.data.airtelx;
+      this.mobilex = response.data.data["9mobilex"];
+      this.tvx = response.data.data.tvx;
+      this.electricityx = response.data.data.electricityx;
+      this.ltransferx = response.data.data.ltransferx;
+      this.aritimex = response.data.data.airtimex;
+      this.cardx = response.data.data.cardx;
 
       this.cbill = response.data.data.cbill;
+      this.bridgecardcfee = response.data.data.bridgecardcfee;
+      this.bridgerate = response.data.data.bridgerate;
+      this.ftransferx = response.data.data.ftransferx;
+      this.cardcreatebridgecardcfee = response.data.data.cardcreatebridgecardcfee;
+      this.cardmbridgecardcfee = response.data.data.cardmbridgecardcfee;
+      this.airtelapi = response.data.data.airtelapi;
+      (this.chinapafee = response.data.data.chinapafee),
+        (this.chinapayrate = response.data.data.chinapayrate);
     } catch (e) {
       console.log(e);
     }
@@ -112,6 +153,7 @@ export default {
         mdata: this.mdata,
         nairtime: this.nairtime,
         mairtime: this.mairtime,
+
         ncable: this.ncable,
         mcable: this.mcable,
         nelect: this.nelect,
@@ -128,6 +170,26 @@ export default {
         ncdata: this.ncdata,
         ncaitime: this.ncaitime,
         ncbill: this.ncbill,
+        ktfee: this.ktfee,
+        tfee: this.tfee,
+        mtnx: this.mtnx,
+        glox: this.glox,
+        airtelx: this.airtelx,
+        mobilex: this.mobilex,
+        tvx: this.tvx,
+        electricityx: this.electricityx,
+        ltransferx: this.ltransferx,
+        aritimex: this.aritimex,
+        cardx: this.cardx,
+        bridgecardcfee: this.bridgecardcfee,
+        bridgerate: this.bridgerate,
+        ftransferx: this.ftransferx,
+        cardmbridgecardcfee: this.cardmbridgecardcfee,
+        cardcreatebridgecardcfee: this.cardcreatebridgecardcfee,
+        airtelapi: this.airtelapi,
+        gloapi: this.gloapi,
+        chinapayrate: this.chinapayrate,
+        chinapafee: this.chinapafee,
       };
       try {
         const response = await axios.post(
@@ -141,7 +203,6 @@ export default {
 
           this.interval = setTimeout(() => {
             this.status = null;
-            this.$router.go();
           }, 3000);
         } else {
           this.status = false;
@@ -207,6 +268,58 @@ export default {
             <option value="1">ENABLED</option>
             <option value="0">DISABLED</option>
           </select>
+          <label for="mtn">SWITCH MTN DATA</label>
+          <select v-model="mtnx" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH GLO</label>
+          <select v-model="glox" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH AIRTEL</label>
+          <select v-model="airtelx" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH 9MOBILE</label>
+          <select v-model="mobilex" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH TV</label>
+          <select v-model="tvx" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH ELECTRICITY</label>
+          <select v-model="electricityx" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH LOCAL TRANSFER</label>
+          <select v-model="ltransferx" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH AIRTIME</label>
+          <select v-model="aritimex" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+          <label for="mtn">SWITCH FOREIGN AIRTIME</label>
+          <select v-model="ftransferx" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+
+          <label for="mtn">SWITCH CARD</label>
+          <select v-model="cardx" class="form-control">
+            <option value="1">ENABLED</option>
+            <option value="0">DISABLED</option>
+          </select>
+
           <button class="btn btn-info w-100 mt-2" :disabled="isDisabled">
             {{ btnText }}
           </button>
@@ -223,8 +336,7 @@ td {
   padding: 0.6rem !important;
 }
 .actives {
-  background-color: grey;
-  color: #fff;
+  color: #4705af;
 }
 .active {
   color: #4705af !important;

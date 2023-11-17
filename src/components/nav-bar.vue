@@ -150,17 +150,11 @@ export default {
         <template slot="button-content">
           <div class="nav-user mr-0 waves-effect waves-light">
             <img
-              v-if="user.data.image === null"
               src="@assets/images/users/user-1.jpg"
               alt="user-image"
               class="rounded-circle"
             />
-            <img
-              v-if="user.data.image !== null"
-              :src="url + user.data.image"
-              alt="user-image"
-              class="rounded-circle"
-            />
+
             <span class="pro-user-name ml-1">
               {{ user.data.username }}<i class="mdi mdi-chevron-down"></i>
             </span>

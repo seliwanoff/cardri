@@ -63,9 +63,33 @@ export default {
       ncaitime: "",
       ncdata: "",
       ncbill: "",
+      bridgecardcfee: 0,
+      bridgerate: 0,
+      ftransferx: 0,
+      cardcreatebridgecardcfee: 0,
+      ktfee: 0,
+
+      tfee: 0,
+      mtnx: 0,
+      glox: 0,
+      airtelx: 0,
+      mobilex: 0,
+      tvx: 0,
+      electricityx: 0,
+      ltransferx: 0,
+      aritimex: 0,
+      cardx: 0,
+      airtelapi: "",
+      gloapi: "",
+      mobileapi: 0,
+      airtimeapi: 0,
+      cardmbridgecardcfee: 0,
+      airtime: 0,
+      chinapayrate: 0,
+      chinapafee: 0,
     };
   },
-  async mounted() {
+  async created() {
     try {
       const response = await axios.get(
         `${process.env.VUE_APP_BASE_URL}api/getmanagement`
@@ -90,8 +114,34 @@ export default {
       this.ncaitime = response.data.data.ncaitime;
       this.ncdata = response.data.data.ncdata;
       this.ncbill = response.data.data.ncbill;
+      this.airtelapi = response.data.data.airtelapi;
+      this.gloapi = response.data.data.gloapi;
+      this.mobileapi = response.data.data.mobileapi;
+      this.airtimeapi = response.data.data.airtimeapi;
+
+      this.ktfee = response.data.data.ktfee;
+      this.aritimex = response.data.data.airtimex;
+      this.airtime = response.data.data.airtime;
+      this.tfee = response.data.data.tfee;
+      this.mtnx = response.data.data.mtnx;
+      this.glox = response.data.data.glox;
+      this.airtelx = response.data.data.airtelx;
+      this.mobilex = response.data.data["9mobilex"];
+      this.tvx = response.data.data.tvx;
+      this.electricityx = response.data.data.electricityx;
+      this.ltransferx = response.data.data.ltransferx;
+      this.cardx = response.data.data.cardx;
 
       this.cbill = response.data.data.cbill;
+      this.bridgecardcfee = response.data.data.bridgecardcfee;
+      this.bridgerate = response.data.data.bridgerate;
+      this.ftransferx = response.data.data.ftransferx;
+      this.cardcreatebridgecardcfee = response.data.data.cardcreatebridgecardcfee;
+      this.cardmbridgecardcfee = response.data.data.cardmbridgecardcfee;
+
+      this.cbill = response.data.data.cbill;
+      (this.chinapayrate = response.data.data.chinapayrate),
+        (this.chinapafee = response.data.data.chinapayrate);
     } catch (e) {
       console.log(e);
     }
@@ -99,12 +149,14 @@ export default {
       const response = await axios.get(`${process.env.VUE_APP_BASE_URL}api/getmtnplans`);
       this.plans = response.data.data;
     } catch (e) {
+      console.log(e);
       if (e.response.status === 401) {
         this.$router.push("/");
         localStorage.removeItem("admin");
       }
     }
   },
+
   methods: {
     async handleImage() {
       alert("hello");
@@ -121,14 +173,12 @@ export default {
         formdata.append("image2", this.image2, this.image2.name);
         formdata.append("image3", this.image3, this.image3.name);
       }
-      console.log(formdata);
 
       try {
         const response = await axios.post(
           `${process.env.VUE_APP_BASE_URL}api/uploadbanner`,
           formdata
         );
-        console.log(response);
         if (response.data.status === "true") {
           this.status = true;
           this.message = "Uploaded Succesful";
@@ -174,6 +224,8 @@ export default {
         nelect: this.nelect,
         melect: this.melect,
         mtnapi: this.mtnapi,
+        ktfee: this.ktfee,
+
         cdata: this.cdata,
         caitime: this.caitime,
         cbill: this.cbill,
@@ -185,6 +237,27 @@ export default {
         ncaitime: this.ncaitime,
         ncdata: this.ncdata,
         ncbill: this.ncbill,
+        tfee: this.tfee,
+        mtnx: this.mtnx,
+        glox: this.glox,
+        airtelx: this.airtelx,
+        mobilex: this.mobilex,
+        tvx: this.tvx,
+        electricityx: this.electricityx,
+        ltransferx: this.ltransferx,
+        aritimex: this.aritimex,
+        cardx: this.cardx,
+        bridgecardcfee: this.bridgecardcfee,
+        bridgerate: this.bridgerate,
+        ftransferx: this.ftransferx,
+        cardmbridgecardcfee: this.cardmbridgecardcfee,
+        cardcreatebridgecardcfee: this.cardcreatebridgecardcfee,
+        gloapi: this.gloapi,
+        airtelapi: this.airtelapi,
+        mobileapi: this.mobileapi,
+        airtime: this.airtime,
+        chinapayrate: this.chinapayrate,
+        chinapafee: this.chinapafee,
       };
       try {
         const response = await axios.post(
@@ -198,7 +271,6 @@ export default {
 
           this.interval = setTimeout(() => {
             this.status = null;
-            this.$router.go();
           }, 3000);
         } else {
           this.status = false;
@@ -230,7 +302,6 @@ export default {
       }
     },
     onSelectedFile1(event) {
-      console.log(event.target.files);
       const files = event.target.files;
       let filename = files[0].name;
 
@@ -337,9 +408,9 @@ export default {
           :selected="selected"
           @selected="setSelected"
         >
-          <Tab :isSelected="selected === 'Upload'">
+          <Tab :isselected="selected === 'Upload'">
             <b-card style="margin-top: 30px">
-              <form enctype="multipart/form-data" @submit.prevent="handleImage">
+              <form @submit.prevent="handleImage">
                 <label for="image">Image 1 <small>(svg only)</small></label>
 
                 <Message :status="status" :message="message" />
@@ -463,7 +534,7 @@ export default {
               </form>
             </b-card>
           </Tab>
-          <Tab :isSelected="selected === 'Data-Management'">
+          <Tab :isselected="selected === 'Data-Management'">
             <b-card style="margin-top: 30px">
               <Message :status="status" :message="message" />
 
@@ -478,6 +549,7 @@ export default {
                     placeholder="Merchant cable User"
                   />
                 </div>
+
                 <div class="form-group">
                   <label for="exampleInputPassword1">Normal Cable User</label>
                   <input
@@ -485,6 +557,87 @@ export default {
                     type="text"
                     class="form-control"
                     placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">KUDA TRANSFER FEES</label>
+                  <input
+                    v-model="ktfee"
+                    type="text"
+                    class="form-control"
+                    placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1"> TRANSFER FEES</label>
+                  <input
+                    v-model="tfee"
+                    type="text"
+                    class="form-control"
+                    placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1"> CARD FUNDING FEE</label>
+                  <input
+                    v-model="bridgecardcfee"
+                    type="text"
+                    class="form-control"
+                    placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1"> DOLLAR CARD RATE</label>
+                  <input
+                    v-model="bridgerate"
+                    type="text"
+                    class="form-control"
+                    placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1"> CARD FEES</label>
+                  <input
+                    v-model="bridgecardcfee"
+                    type="text"
+                    class="form-control"
+                    placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1"> CARD CREATION FEES</label>
+                  <input
+                    v-model="cardcreatebridgecardcfee"
+                    type="text"
+                    class="form-control"
+                    placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">FIRST MONTH FUNDING FEE</label>
+                  <input
+                    v-model="cardmbridgecardcfee"
+                    type="text"
+                    class="form-control"
+                    placeholder="Normal Cable user"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Chinapay Fees</label>
+                  <input
+                    v-model="chinapafee"
+                    type="text"
+                    class="form-control"
+                    placeholder="China Pay fee"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Chinapay rate</label>
+                  <input
+                    v-model="chinapayrate"
+                    type="text"
+                    class="form-control"
+                    placeholder="Chinapay rate"
                   />
                 </div>
                 <div class="form-group">
@@ -562,6 +715,16 @@ export default {
                     placeholder="Merchant Airtime commission"
                   />
                 </div>
+                <label for="email"> AIRTIME API</label> <br />
+
+                <select
+                  v-model="airtime"
+                  class="form-control"
+                  aria-label="Default select example"
+                >
+                  <option :value="2">VTPASS</option>
+                  <option :value="1">CLUB KONNECT</option>
+                </select>
                 <label for="email"> MTN Data API</label> <br />
 
                 <select
@@ -569,8 +732,39 @@ export default {
                   class="form-control"
                   aria-label="Default select example"
                 >
-                  <option :value="2">SME PLUG</option>
-                  <option :value="1">CADRI</option>
+                  <option :value="2">SUPERJARA</option>
+                  <option :value="1">SME VEND</option>
+                  <option :value="3">CLUB KONNECT</option>
+                </select>
+                <label for="email"> GLO Data API</label> <br />
+
+                <select
+                  v-model="gloapi"
+                  class="form-control"
+                  aria-label="Default select example"
+                >
+                  <option :value="2">SUPERJARA</option>
+                  <option :value="3">CLUB CONNECT</option>
+                </select>
+                <label for="email"> AIRTEL Data API</label> <br />
+
+                <select
+                  v-model="airtelapi"
+                  class="form-control"
+                  aria-label="Default select example"
+                >
+                  <option :value="2">SUPERJARA</option>
+                  <option :value="3">CLUB CONNECT</option>
+                </select>
+                <label for="email"> ETISALAT Data API</label> <br />
+
+                <select
+                  v-model="mobileapi"
+                  class="form-control"
+                  aria-label="Default select example"
+                >
+                  <option :value="1">SUPERJARA</option>
+                  <option :value="3">CLUB CONNECT</option>
                 </select>
 
                 <button :disabled="isDisabled" type="submit" class="btn btn-primary mt-2">
@@ -579,7 +773,7 @@ export default {
               </form>
             </b-card>
           </Tab>
-          <Tab :isSelected="selected === 'Manage'">
+          <Tab :isselected="selected === 'Manage'">
             <b-card style="margin-top: 30px">
               <Message :status="status" :message="message" />
 

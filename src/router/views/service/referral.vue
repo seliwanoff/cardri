@@ -383,6 +383,7 @@ export default {
             >
               <td>{{ item.ref }}</td>
               <td>{{ item.reciever }}</td>
+
               <td v-if="item.network === '1'">MTN</td>
               <td v-else-if="item.network === '2'">AIRTEL</td>
               <td v-else-if="item.network === '3'">9mobile</td>

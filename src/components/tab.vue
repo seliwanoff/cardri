@@ -1,15 +1,15 @@
 <template>
-    <div v-if="isSelected">
-        <slot></slot>
-    </div>
+  <div v-if="isselected">
+    <slot></slot>
+  </div>
 </template>
 <script>
 export default {
-    name:'Tabapp',
-    props:{
-        isSelected:{
-            type:Boolean
-        }
-    }
+  name: 'TabApp',
+  props: {
+    isselected: {
+      type: Boolean,
+    },
+  },
 }
 </script>

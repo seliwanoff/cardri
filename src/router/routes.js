@@ -26,6 +26,16 @@ export default [
   // props: (route) => ({ user: store.state.auth.user || {}}),
   },
   {
+    path: '/card_request/card',
+    name: 'Card Request',
+    component: () => lazyLoadView(import('@views/card_request/card')),
+    meta: {
+      authRequired: false,
+      title: 'Card Request' 
+    },
+  // props: (route) => ({ user: store.state.auth.user || {}}),
+  },
+  {
     path: '/service/data',
     name: 'Data Transaction',
     component: () => lazyLoadView(import('@views/service/data')),
@@ -86,6 +96,36 @@ export default [
  // props: (route) => ({ user: store.state.auth.currentUser || {}}),
   },
   {
+    path: '/service/china',
+    name: 'Alipay Transaction',
+    component: () => lazyLoadView(import('@views/service/china')),
+    meta: {
+      authRequired: false,
+      title: 'China Transaction' 
+    },
+ // props: (route) => ({ user: store.state.auth.currentUser || {}}),
+  },
+  {
+    path: '/service/webpay',
+    name: 'Webpay Transaction',
+    component: () => lazyLoadView(import('@views/service/webpay')),
+    meta: {
+      authRequired: false,
+      title: 'China Transaction' 
+    },
+ // props: (route) => ({ user: store.state.auth.currentUser || {}}),
+  },
+  {
+    path: '/notification/home',
+    name: 'Notfication',
+    component: () => lazyLoadView(import('@views/notification/home')),
+    meta: {
+      authRequired: false,
+      title: 'User Notification' 
+    },
+ // props: (route) => ({ user: store.state.auth.currentUser || {}}),
+  },
+  {
     path: '/settings/admin-settings',
     name: 'Admin Settings',
     component: () => lazyLoadView(import('@views/settings/admin-settings')),
@@ -112,6 +152,26 @@ export default [
     meta: {
       authRequired: false,
       title: 'Network Settings' 
+    },
+ // props: (route) => ({ user: store.state.auth.currentUser || {}}),
+  },
+  {
+    path: '/settings/clubkonnect',
+    name: 'ClubKonnect Settings',
+    component: () => lazyLoadView(import('@views/settings/clubkonnect')),
+    meta: {
+      authRequired: false,
+      title: 'Network Settings' 
+    },
+ // props: (route) => ({ user: store.state.auth.currentUser || {}}),
+  },
+  {
+    path: '/users/useraccount/:id',
+    name: 'User Account',
+    component: () => lazyLoadView(import('@views/users/useraccount')),
+    meta: {
+      authRequired: false,
+      title: 'User Account' 
     },
  // props: (route) => ({ user: store.state.auth.currentUser || {}}),
   },

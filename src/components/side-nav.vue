@@ -47,10 +47,22 @@ export default {
       <ul id="side-menu" class="metismenu">
         <li class="menu-title">Menu</li>
 
-        <li class="active">
-          <router-link to="/" class="active">
+        <li>
+          <router-link to="/">
             <i class="mdi mdi-view-dashboard"></i>
             <span> Dashboard </span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/card_request/card">
+            <i class="mdi mdi-credit-card"></i>
+            <span> Cards </span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/notification/home">
+            <i class="mdi mdi-alarm-light"></i>
+            <span> Notification </span>
           </router-link>
         </li>
 
@@ -131,6 +143,54 @@ export default {
                   <i class="mdi mdi-television"></i>
                 </span>
                 Tv
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/service/china"
+                style="justify-content: flex-start; display: flex"
+                ><span
+                  style="
+                    padding: 4px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 100%;
+                    background: #4705af;
+                    display: flex;
+                    align-items: center;
+                    place-items: center;
+                    margin-right: 10px;
+                    color: #fff;
+                    justify-content: center;
+                  "
+                >
+                  <i class="mdi mdi-television"></i>
+                </span>
+                Alipay
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/service/webpay"
+                style="justify-content: flex-start; display: flex"
+                ><span
+                  style="
+                    padding: 4px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 100%;
+                    background: #4705af;
+                    display: flex;
+                    align-items: center;
+                    place-items: center;
+                    margin-right: 10px;
+                    color: #fff;
+                    justify-content: center;
+                  "
+                >
+                  <i class="mdi mdi-television"></i>
+                </span>
+                Web Pay
               </router-link>
             </li>
             <li>
@@ -341,6 +401,30 @@ export default {
                   <i class="mdi mdi-settings"></i>
                 </span>
                 Network Settings
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/settings/clubkonnect"
+                style="justify-content: flex-start; display: flex"
+                ><span
+                  style="
+                    padding: 4px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 100%;
+                    background: #4705af;
+                    display: flex;
+                    align-items: center;
+                    place-items: center;
+                    margin-right: 10px;
+                    color: #fff;
+                    justify-content: center;
+                  "
+                >
+                  <i class="mdi mdi-settings"></i>
+                </span>
+                ClubKonnect
               </router-link>
             </li>
             <li>
