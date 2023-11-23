@@ -202,17 +202,18 @@ export default {
       var lastMonthEndDate = new Date(firstDayOfMonth);
       lastMonthEndDate.setDate(firstDayOfMonth.getDate() - 1);
       this.review = value;
+      // console.log(lastMonthStartDate);
       await axios
         .get(
-          `${process.env.VUE_APP_BASE_URL}api/gettransactions?dayfrom=${new Date(
+          `${
+            process.env.VUE_APP_BASE_URL
+          }api/gettransactions?dayfrom=${new Date().getDate()}&monthfrom=${new Date().getMonth(
             lastMonthStartDate
-          ).getDate()}&monthfrom=${
-            new Date(lastMonthStartDate).getMonth() + 1
-          }&yearfrom=${new Date(lastMonthStartDate).getFullYear()}&dayto=${new Date(
-            lastMonthEndDate
-          ).getDate()}&monthto=${
-            new Date(lastMonthEndDate).getMonth() + 1
-          }&yearto=${new Date(lastMonthEndDate).getFullYear()}`
+          )}&yearfrom=${new Date(
+            lastMonthStartDate
+          ).getFullYear()}&dayto=${new Date().getDate()}&monthto=${
+            new Date().getMonth() + 1
+          }&yearto=${new Date().getFullYear()}`
         )
         .then((res) => {
           console.log(res);
@@ -237,15 +238,15 @@ export default {
 
       await axios
         .get(
-          `${process.env.VUE_APP_BASE_URL}api/gettransactions?dayfrom=${new Date(
+          `${
+            process.env.VUE_APP_BASE_URL
+          }api/gettransactions?dayfrom=${new Date().getDate()}&monthfrom=${
+            new Date().getMonth() + 1
+          }&yearfrom=${new Date(
             lastYearStartDate
-          ).getDate()}&monthfrom=${
-            new Date(lastYearStartDate).getMonth() + 1
-          }&yearfrom=${new Date(lastYearStartDate).getFullYear()}&dayto=${new Date(
+          ).getFullYear()}&dayto=${new Date().getDate()}&monthto=${new Date(
             lastYearEndDate
-          ).getDate()}&monthto=${
-            new Date(lastYearEndDate).getMonth() + 1
-          }&yearto=${new Date(lastYearEndDate).getFullYear()}`
+          ).getMonth()}&yearto=${new Date().getFullYear()}`
         )
         .then((res) => {
           console.log(res);

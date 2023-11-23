@@ -31,6 +31,7 @@ export default {
       daysInMonth: "",
       transactions: [],
       moment: moment,
+      search: "",
       per_page: 0,
 
       months: [
@@ -101,6 +102,20 @@ export default {
   methods: {
     getEachUserTranscaction(userid, ref) {
       this.$router.push(`/users/userdetailtransaction/${userid}/${ref}`);
+    },
+    async searchByCriteria() {
+      try {
+        const getUsers = await axios.get(
+          `${process.env.VUE_APP_BASE_URL}api/gettransactionbyuser?user=${this.id}&search=${this.search}`
+        );
+        this.transactions = getUsers.data.data.data;
+        this.totalpage = getUsers.data.data.total;
+        this.per_page = getUsers.data.data.per_page;
+        this.page = Math.ceil(parseInt(this.totalpage / this.per_page) + 1);
+        this.totalAmount = getUsers.data.total;
+      } catch (e) {
+        console.log(e);
+      }
     },
     async pageNumberget(newPagenumber) {
       if (this.day) {
@@ -353,6 +368,29 @@ export default {
             </b-card>
           </div>
         </b-card>
+      </div>
+      <div class="w-100 mt-2 mb-2">
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <input
+              type="search"
+              class="w-100"
+              v-model="search"
+              @keyup="searchByCriteria"
+              placeholder="Search by any criteria"
+              style="
+                padding: 16px 8px;
+                font-size: 14px;
+                font-weight: 500;
+                letter-spacing: 2%;
+
+                outline: none;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+              "
+            />
+          </div>
+        </div>
       </div>
       <div class="col" style="overflow: auto">
         <table v-if="transactions.length > 0" class="table">

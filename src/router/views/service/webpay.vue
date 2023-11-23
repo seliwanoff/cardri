@@ -459,6 +459,7 @@ export default {
               <th scope="col">Bal. Before</th>
               <th scope="col">Bal. After</th>
               <th scope="col">Amount</th>
+              <th scope="col">Amount(Yuan/RMB)</th>
               <th scope="col">Source</th>
               <th scope="col">Time</th>
               <th scope="col">Status</th>
@@ -476,6 +477,7 @@ export default {
               <td>&#8358;{{ item.bbefore }}</td>
               <td>&#8358;{{ item.bafter }}</td>
               <td>&#8358;{{ item.amount }}</td>
+              <td>&yen;{{ item.plan }}</td>
               <td>{{ item.m }}</td>
               <td>
                 {{ new Date(item.created_at).toDateString()

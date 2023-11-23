@@ -36,7 +36,7 @@ export default {
           `${process.env.VUE_APP_BASE_URL}api/sendmessagetoallusers`,
           data
         );
-        console.log(response);
+       // console.log(response);
 
         this.status = true;
         this.message = "Notification Sent sucessfully";
